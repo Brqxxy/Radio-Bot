@@ -30,11 +30,11 @@ npm install
 ### 3️⃣ Set Up Your Bot Token
 1. Create a bot on the [Discord Developer Portal](https://discord.com/developers/applications).
 2. Copy your **bot token**.
-3. Replace the `TOKEN` variable in `index.js` with your bot token.
+3. Replace the `TOKEN` variable in `fxbot.js` with your bot token.
 
 ### 4️⃣ Set Your Discord Channel
 1. Find the **Channel ID** where you want the bot to post updates.
-2. Replace `CHANNEL_ID` in `index.js` with your desired channel ID.
+2. Replace `CHANNEL_ID` in `fxbot.js` with your desired channel ID.
 
 ### 5️⃣ Run the Bot
 ```sh
