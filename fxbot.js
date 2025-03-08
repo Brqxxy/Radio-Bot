@@ -208,4 +208,4 @@ bot.login(TOKEN).then(() => {
 });
 
 
-// Made by, Brqx enjoy!🚀
+// Made by Brqx, Enjoy!🚀
