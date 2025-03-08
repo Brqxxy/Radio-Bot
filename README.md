@@ -64,15 +64,3 @@ node index.js
 - **Bot is not responding?** Check if it has the right permissions to send messages.
 - **Bot is crashing?** Make sure your `TOKEN` and `CHANNEL_ID` are set correctly.
 
----
-
-## 📜 License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 📞 Support
-For issues or feature requests, open an [issue](https://github.com/YOUR_GITHUB_USERNAME/radio-fx-bot/issues) on GitHub.
-
-Enjoy tuning in! 🎶📡
-
