@@ -18,7 +18,7 @@ Before installing, make sure you have:
 
 ### 1️⃣ Clone the Repository
 ```sh
-git clone https://github.com/YOUR_GITHUB_USERNAME/radio-fx-bot.git
+git clone https://github.com/Brqxxy/radio-fx-bot.git
 cd radio-fx-bot
 ```
 
