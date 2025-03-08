@@ -1,6 +1,6 @@
 # 📡 Radio FX Bot 📡
 
-Radio FX Bot is a Discord bot that generates and updates random radio frequencies, simulating a real-world radio environment. This bot is great for roleplay servers, simulation enthusiasts, and anyone who wants a fun way to engage their community!
+Radio FX Bot is a Discord bot that generates and updates random radio frequencies, simulating a real-world radio environment. This bot is great for roleplay servers, simulation enthusiasts, and anyone who wants a fun way to engage their roleplay!
 
 ## 🚀 Features
 - 📻 **Random Radio Frequencies** – Generates and updates radio frequencies daily.
