@@ -38,7 +38,7 @@ npm install
 
 ### 5️⃣ Run the Bot
 ```sh
-node index.js
+node fxbot.js
 ```
 
 ---
