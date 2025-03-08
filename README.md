@@ -14,7 +14,7 @@ Radio FX Bot is a Discord bot that generates and updates random radio frequencie
 ### Prerequisites
 Before installing, make sure you have:
 - [Node.js](https://nodejs.org/) (v16 or later)
-- [Discord Developer Portal](https://discord.com/developers/applications) access to create a bot
+- [Discord Developer Portal](https://discord.com/developers/applications) Access needed to create a bot
 
 ### 1️⃣ Clone the Repository
 ```sh
