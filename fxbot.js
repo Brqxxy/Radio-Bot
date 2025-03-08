@@ -16,26 +16,26 @@ let lastEmbedMessage = null; // Store the last embed message
 
 // Define multiple frequency ranges to choose from
 const frequencyRanges = [
-    { min: 26.96, max: 27.40 },   // CB radio band
-    { min: 28.00, max: 29.70 },   // 10-meter amateur radio band
-    { min: 30.00, max: 50.00 },   // VHF low-band (public safety, business, amateur)
-    { min: 50.00, max: 54.00 },   // 6-meter amateur radio band
-    { min: 72.00, max: 76.00 },   // Remote control and assistive listening
-    { min: 108.00, max: 137.00 }, // Aviation band (VHF)
-    { min: 136.00, max: 174.00 }, // VHF land mobile, marine, weather, amateur (2m)
-    { min: 174.00, max: 216.00 }, // TV channels 7-13, public service
-    { min: 216.00, max: 222.00 }, // Amateur and business
-    { min: 222.00, max: 225.00 }, // 1.25-meter amateur radio band
-    { min: 300.00, max: 420.00 }, // Military and experimental UHF
-    { min: 420.00, max: 450.00 }, // 70cm amateur band, military
-    { min: 450.00, max: 470.00 }, // Business, emergency, public safety
-    { min: 470.00, max: 512.00 }, // UHF TV channels 14-20
-    { min: 764.00, max: 776.00 }, // Public safety narrowband
-    { min: 794.00, max: 806.00 }, // Public safety broadband
-    { min: 806.00, max: 824.00 }, // Public safety, commercial trunked radio
-    { min: 849.00, max: 869.00 }, // Cellular uplink
-    { min: 869.00, max: 894.00 }, // Cellular downlink
-    { min: 902.00, max: 928.00 }, // ISM band (cordless phones, RFID, amateur)
+{ min: 26.96, max: 27.40 },   // FX #1
+{ min: 28.00, max: 29.70 },   // FX #2
+{ min: 30.00, max: 50.00 },   // FX #3
+{ min: 50.00, max: 54.00 },   // FX #4
+{ min: 72.00, max: 76.00 },   // FX #5
+{ min: 108.00, max: 137.00 }, // FX #6
+{ min: 136.00, max: 174.00 }, // FX #7
+{ min: 174.00, max: 216.00 }, // FX #8
+{ min: 216.00, max: 222.00 }, // FX #9
+{ min: 222.00, max: 225.00 }, // FX #10
+{ min: 300.00, max: 420.00 }, // FX #11
+{ min: 420.00, max: 450.00 }, // FX #12
+{ min: 450.00, max: 470.00 }, // FX #13
+{ min: 470.00, max: 512.00 }, // FX #14
+{ min: 764.00, max: 776.00 }, // FX #15
+{ min: 794.00, max: 806.00 }, // FX #16
+{ min: 806.00, max: 824.00 }, // FX #17
+{ min: 849.00, max: 869.00 }, // FX #18
+{ min: 869.00, max: 894.00 }, // FX #19
+{ min: 902.00, max: 928.00 }, // FX #20
 ];
 
 bot.once('ready', async () => {
