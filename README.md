@@ -138,7 +138,7 @@ docker logs radio-fx-bot
 # Docker Compose
 docker-compose logs
 ```
----
+
 ## 🔧 Commands
 | Command     | Description |
 |------------|-------------|
