@@ -31,7 +31,7 @@ npm install
 ```sh
 node fxbot.js
 ```
----
+
 ## 🐳 Docker Setup
 Running Radio FX Bot in Docker makes deployment easy and consistent across different environments.
 
