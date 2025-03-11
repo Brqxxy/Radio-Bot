@@ -1,18 +1,23 @@
 const { Client, GatewayIntentBits, EmbedBuilder, ActivityType } = require('discord.js');
 
-const TOKEN = 'BOT_TOKEN'; // Replace with your bot token
-const CHANNEL_ID = 'CHANNEL_ID';  // The channel where the bot will post
+// Bot token and channel ID where it will operate
+const TOKEN = 'TOKEN_ID'; // Replace with your bot token
+const CHANNEL_ID = 'CHANNEL_ID';  // The channel where the bot will post messages
 
+// Create a new Discord bot client with necessary permissions (intents)
 const bot = new Client({
     intents: [
-        GatewayIntentBits.Guilds,
-        GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.MessageContent
+        GatewayIntentBits.Guilds, // Allows bot to operate in servers
+        GatewayIntentBits.GuildMessages, // Enables reading and sending messages
+        GatewayIntentBits.MessageContent // Allows bot to read message content
     ]
 });
 
+// Variables to store current channel frequency and last embed message
 let currentChannel = null;
 let lastEmbedMessage = null;
+
+// Predefined frequency ranges for random selection
 const frequencyRanges = [
     { min: 26.96, max: 27.40 },
     { min: 28.00, max: 29.70 },
@@ -36,6 +41,7 @@ const frequencyRanges = [
     { min: 902.00, max: 928.00 }
 ];
 
+// Function to get the current timestamp in AEDT timezone
 function getAEDTTimestamp() {
     return new Date().toLocaleString('en-AU', { 
         timeZone: 'Australia/Sydney',
@@ -49,15 +55,17 @@ function getAEDTTimestamp() {
     });
 }
 
+// Runs once when the bot is ready
 bot.once('ready', async () => {
     console.log(`[${getAEDTTimestamp()}] Logged in as ${bot.user?.tag}`);
     bot.user.setActivity('Radio Waves', { type: ActivityType.Listening });
     
-    await cleanupExistingEmbeds();
-    await changeRadioChannel();
-    scheduleNextUpdate();
+    await cleanupExistingEmbeds(); // Remove old messages
+    await changeRadioChannel(); // Initialize the radio channel
+    scheduleNextUpdate(); // Set daily update
 });
 
+// Function to delete previous bot messages to avoid clutter
 async function cleanupExistingEmbeds() {
     try {
         const channel = bot.channels.cache.get(CHANNEL_ID);
@@ -77,19 +85,21 @@ async function cleanupExistingEmbeds() {
     }
 }
 
+// Schedules the next radio channel update at 7:00 AM AEDT
 function scheduleNextUpdate() {
     const now = new Date();
     const nextRun = new Date(now);
-    nextRun.setUTCHours(20, 0, 0, 0);
+    nextRun.setUTCHours(20 - 1, 0, 0, 0); // Adjusting the hour for AEDT (UTC+11 or UTC+10 depending on daylight saving)
     if (nextRun <= now) nextRun.setUTCDate(nextRun.getUTCDate() + 1);
     
     console.log(`[${getAEDTTimestamp()}] Next update scheduled for: ${nextRun.toLocaleString('en-AU', { timeZone: 'Australia/Sydney' })}`);
     setTimeout(() => {
         changeRadioChannel();
-        setInterval(changeRadioChannel, 24 * 60 * 60 * 1000);
+        setInterval(changeRadioChannel, 24 * 60 * 60 * 1000); // Repeat daily
     }, nextRun - now);
 }
 
+// Function to select a random radio frequency and update the Discord channel
 async function changeRadioChannel() {
     const selectedRange = frequencyRanges[Math.floor(Math.random() * frequencyRanges.length)];
     currentChannel = parseFloat((Math.random() * (selectedRange.max - selectedRange.min) + selectedRange.min).toFixed(2));
@@ -100,17 +110,19 @@ async function changeRadioChannel() {
     if (lastEmbedMessage) await lastEmbedMessage.delete().catch(console.error);
     
     const embed = new EmbedBuilder()
-        .setColor('#0099ff')
-        .setTitle('<a:wifi:1347185083978874920> Radio FX Channel Update')
-        .setDescription(`New Channel Set: **${currentChannel.toFixed(2)} MHz**. Stay tuned!`);
+    .setColor('#0099ff')
+    .setTitle('<a:wifi:1347185083978874920> Radio FX Channel Update')
+    .setDescription(`New Channel Set: **${currentChannel.toFixed(2)} MHz**. Stay tuned!`)
+    .setFooter({ text: 'Use `!newfx` to change or `!currentfx` to check.' });
     
     lastEmbedMessage = await channel.send({ embeds: [embed] });
 }
 
+// Listen for user commands
 bot.on('messageCreate', async (message) => {
     if (message.author.bot) return;
     
-    console.log(`[${getAEDTTimestamp()}] Received message: "${message.content}" from ${message.author.username} (${message.author.id}) in ${message.guild?.name || 'DM'}`);
+    console.log(`[${getAEDTTimestamp()}] Received message: "${message.content}" from ${message.author.username} (${message.author.id})`);
 
     if (message.content === '!newfx') {
         await changeRadioChannel();
@@ -131,16 +143,20 @@ bot.on('messageCreate', async (message) => {
         const embed = new EmbedBuilder()
             .setColor('#F47B67')
             .setTitle('<a:check2:1347189672903970937> Current Radio FX Channel')
-            .setDescription(currentChannel ? `Current Channel: **${currentChannel.toFixed(2)} MHz**. Keep your radios tuned!` : "No channel has been set yet. Use `!newfx` to set one.");
+            .setDescription(currentChannel ? `Current Channel: **${currentChannel.toFixed(2)} MHz**.` : "No channel has been set yet. Use `!newfx` to set one.");
         
         const sentMessage = await message.channel.send({ embeds: [embed] });
         setTimeout(() => sentMessage.delete().catch(console.error), 15000);
     }
 });
 
+// Attempt to login the bot
 console.log(`[${getAEDTTimestamp()}] Attempting to login...`);
 bot.login(TOKEN).then(() => {
     console.log(`[${getAEDTTimestamp()}] Login successful!`);
 }).catch(error => {
     console.error(`[${getAEDTTimestamp()}] Login error!:`, error);
 });
+
+
+// Made by, Brqx enjoy!🚀
