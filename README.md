@@ -5,7 +5,7 @@ Radio FX Bot is a Discord bot that generates and updates random radio frequencie
 - 🔄 **Scheduled Updates** – Automatically updates at 7:00 AM AEDT.
 - 📡 **Interactive Commands** – Users can request a new frequency or check the current one.
 - 🛠 **Embed-Based Messages** – Clean and structured updates posted in a specific channel.
----
+
 ## 🛠 Setup & Installation
 ### Prerequisites
 Before installing, make sure you have:
