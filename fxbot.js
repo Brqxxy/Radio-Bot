@@ -115,6 +115,14 @@ bot.on('messageCreate', async (message) => {
     if (message.content === '!newfx') {
         await changeRadioChannel();
         message.delete().catch(console.error);
+
+        const embed = new EmbedBuilder()
+            .setColor('#348261')
+            .setTitle('<a:check1:1347188461697896479> Radio FX Channel Changed')
+            .setDescription(`New Channel Set: **${currentChannel.toFixed(2)} MHz**. Tune in for communication!`);
+        
+        const sentMessage = await message.channel.send({ embeds: [embed] });
+        setTimeout(() => sentMessage.delete().catch(console.error), 15000);
     }
 
     if (message.content === '!currentfx') {
@@ -123,7 +131,7 @@ bot.on('messageCreate', async (message) => {
         const embed = new EmbedBuilder()
             .setColor('#F47B67')
             .setTitle('<a:check2:1347189672903970937> Current Radio FX Channel')
-            .setDescription(currentChannel ? `Current Channel: **${currentChannel.toFixed(2)} MHz**.` : "No channel set. Use `!newfx` to set one.");
+            .setDescription(currentChannel ? `Current Channel: **${currentChannel.toFixed(2)} MHz**. Keep your radios tuned!` : "No channel has been set yet. Use `!newfx` to set one.");
         
         const sentMessage = await message.channel.send({ embeds: [embed] });
         setTimeout(() => sentMessage.delete().catch(console.error), 15000);
@@ -134,5 +142,5 @@ console.log(`[${getAEDTTimestamp()}] Attempting to login...`);
 bot.login(TOKEN).then(() => {
     console.log(`[${getAEDTTimestamp()}] Login successful!`);
 }).catch(error => {
-    console.error(`[${getAEDTTimestamp()}] Login error:`, error);
+    console.error(`[${getAEDTTimestamp()}] Login error!:`, error);
 });
