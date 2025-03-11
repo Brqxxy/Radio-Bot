@@ -172,9 +172,18 @@ async function changeRadioChannel() {
 
 bot.on('messageCreate', async (message) => {
     if (message.author.bot) return;
-    console.log(`Received message: "${message.content}"`);
+    
+    // Get user information for logging
+    const username = message.author.username;
+    const userId = message.author.id;
+    const serverName = message.guild ? message.guild.name : "DM";
+    
+    console.log(`Received message: "${message.content}" from ${username} (${userId}) in ${serverName}`);
 
     if (message.content === '!newfx') {
+        // Log command usage with username
+        console.log(`[COMMAND] User ${username} (${userId}) used the !newfx command in ${serverName}`);
+        
         await changeRadioChannel();
         message.delete().catch(console.error);
 
@@ -188,6 +197,9 @@ bot.on('messageCreate', async (message) => {
     }
 
     if (message.content === '!currentfx') {
+        // Log command usage with username
+        console.log(`[COMMAND] User ${username} (${userId}) used the !currentfx command in ${serverName}`);
+        
         message.delete().catch(console.error);
         
         const embed = new EmbedBuilder()
