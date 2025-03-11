@@ -2,9 +2,9 @@
   "name": "radio-fx-bot",
   "version": "1.0.0",
   "description": "A Discord bot that manages and updates radio frequency channels.",
-  "main": "bot.js",
+  "main": "fxbot.js",
   "scripts": {
-    "start": "node bot.js"
+    "start": "node fxbot.js"
   },
   "dependencies": {
     "discord.js": "^14.12.1"
