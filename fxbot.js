@@ -38,8 +38,23 @@ const frequencyRanges = [
 { min: 902.00, max: 928.00 }, // FX #20
 ];
 
+// Function to get current timestamp in AEDT 12-hour format
+function getTimestamp() {
+    const now = new Date();
+    return now.toLocaleString('en-AU', { 
+        timeZone: 'Australia/Sydney',
+        hour12: true,
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+    });
+}
+
 bot.once('ready', async () => {
-    console.log(`Logged in as ${bot.user?.tag}`);
+    console.log(`[${getTimestamp()}] Logged in as ${bot.user?.tag}`);
     
     // Set the custom status - related to radio frequencies
     bot.user.setActivity('Radio Waves', { type: ActivityType.Listening });
@@ -59,7 +74,7 @@ async function cleanupExistingEmbeds() {
     try {
         const channel = bot.channels.cache.get(CHANNEL_ID);
         if (!channel) {
-            console.log(`Channel with ID ${CHANNEL_ID} not found`);
+            console.log(`[${getTimestamp()}] Channel with ID ${CHANNEL_ID} not found`);
             return;
         }
 
@@ -76,23 +91,23 @@ async function cleanupExistingEmbeds() {
 
         // Delete all found embeds except the most recent one
         if (botEmbeds.size > 0) {
-            console.log(`Found ${botEmbeds.size} existing Radio FX embeds. Cleaning up...`);
+            console.log(`[${getTimestamp()}] Found ${botEmbeds.size} existing Radio FX embeds. Cleaning up...`);
             
             // Delete all but keep track of the latest one
             const deletePromises = [];
             botEmbeds.forEach(msg => {
                 deletePromises.push(msg.delete().catch(err => 
-                    console.error(`Failed to delete message ${msg.id}:`, err)
+                    console.error(`[${getTimestamp()}] Failed to delete message ${msg.id}:`, err)
                 ));
             });
             
             await Promise.all(deletePromises);
-            console.log('Successfully cleaned up existing embeds.');
+            console.log(`[${getTimestamp()}] Successfully cleaned up existing embeds.`);
         } else {
-            console.log('No existing Radio FX embeds found.');
+            console.log(`[${getTimestamp()}] No existing Radio FX embeds found.`);
         }
     } catch (error) {
-        console.error('Error during cleanup of existing embeds:', error);
+        console.error(`[${getTimestamp()}] Error during cleanup of existing embeds:`, error);
     }
 }
 
@@ -107,7 +122,7 @@ function scheduleNextUpdate() {
     }
 
     const timeUntilNextRun = nextRun - now;
-    console.log(`Next update scheduled for: ${nextRun.toLocaleString('en-AU', { timeZone: 'Australia/Sydney' })}`);
+    console.log(`[${getTimestamp()}] Next update scheduled for: ${nextRun.toLocaleString('en-AU', { timeZone: 'Australia/Sydney', hour12: true })}`);
 
     setTimeout(() => {
         changeRadioChannel();
@@ -129,9 +144,9 @@ async function changeRadioChannel() {
         if (lastEmbedMessage) {
             try {
                 await lastEmbedMessage.delete();
-                console.log('Deleted previous embed message');
+                console.log(`[${getTimestamp()}] Deleted previous embed message`);
             } catch (error) {
-                console.error('Failed to delete previous embed:', error);
+                console.error(`[${getTimestamp()}] Failed to delete previous embed:`, error);
             }
         }
 
@@ -146,15 +161,15 @@ async function changeRadioChannel() {
             );
             
             if (botEmbeds.size > 0) {
-                console.log(`Found ${botEmbeds.size} existing Radio FX embeds. Deleting...`);
+                console.log(`[${getTimestamp()}] Found ${botEmbeds.size} existing Radio FX embeds. Deleting...`);
                 for (const msg of botEmbeds.values()) {
                     await msg.delete().catch(err => 
-                        console.error(`Failed to delete message ${msg.id}:`, err)
+                        console.error(`[${getTimestamp()}] Failed to delete message ${msg.id}:`, err)
                     );
                 }
             }
         } catch (error) {
-            console.error('Error checking for existing embeds:', error);
+            console.error(`[${getTimestamp()}] Error checking for existing embeds:`, error);
         }
 
         const embed = new EmbedBuilder()
@@ -164,15 +179,21 @@ async function changeRadioChannel() {
             .setFooter({ text: 'Use `!newfx` to change or `!currentfx` to check.' });
 
         lastEmbedMessage = await channel.send({ embeds: [embed] });
-        console.log(`Posted new radio channel: ${currentChannel} MHz`);
+        console.log(`[${getTimestamp()}] Posted new radio channel: ${currentChannel} MHz`);
     } else {
-        console.log(`Channel with ID ${CHANNEL_ID} not found`);
+        console.log(`[${getTimestamp()}] Channel with ID ${CHANNEL_ID} not found`);
     }
 }
 
 bot.on('messageCreate', async (message) => {
     if (message.author.bot) return;
-    console.log(`Received message: "${message.content}"`);
+    
+    // Get the username and tag (or nickname if available)
+    const username = message.member?.nickname || message.author.username;
+    const userTag = message.author.tag; // This includes the discriminator (e.g., username#1234)
+    
+    // Log the message with the username - only one log output
+    console.log(`[${getTimestamp()}] Received message from ${username} (${userTag}): "${message.content}"`);
 
     if (message.content === '!newfx') {
         await changeRadioChannel();
@@ -200,11 +221,11 @@ bot.on('messageCreate', async (message) => {
     }
 });
 
-console.log('Attempting to login...');
+console.log(`[${getTimestamp()}] Attempting to login...`);
 bot.login(TOKEN).then(() => {
-    console.log('Login successful!');
+    console.log(`[${getTimestamp()}] Login successful!`);
 }).catch(error => {
-    console.error('Login error:', error);
+    console.error(`[${getTimestamp()}] Login error:`, error);
 });
 
 
