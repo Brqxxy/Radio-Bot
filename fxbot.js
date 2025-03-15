@@ -1,6 +1,6 @@
 const { Client, GatewayIntentBits, EmbedBuilder, ActivityType } = require('discord.js');
 
-const TOKEN = 'TOKEN_ID'; // Replace with your bot token
+const TOKEN = 'BOT_TOKEN'; // Replace with your bot token
 const CHANNEL_ID = 'CHANNEL_ID';  // The channel where the bot will post
 
 const bot = new Client({
@@ -186,7 +186,11 @@ async function changeRadioChannel() {
 }
 
 bot.on('messageCreate', async (message) => {
+    // Ignore bot messages
     if (message.author.bot) return;
+    
+    // Ignore messages not in the target channel
+    if (message.channel.id !== CHANNEL_ID) return;
     
     // Get the username and tag (or nickname if available)
     const username = message.member?.nickname || message.author.username;
